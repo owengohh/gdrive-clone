@@ -18,11 +18,11 @@ export default function GoogleDriveClone(
 
   const getChildFolders = () => {
     return folders.filter((folder) => folder.parentId === currentFolder);
-  }
+  };
 
   const getChildFiles = () => {
     return files.filter((file) => file.parentId === currentFolder);
-  }
+  };
 
   const navigate = (id: number) => {
     setCurrentFolder(id);
@@ -30,7 +30,7 @@ export default function GoogleDriveClone(
 
   const path = useMemo(() => {
     const newPath = [];
-    let currentId: number = currentFolder;
+    let currentId: number | undefined = currentFolder;
     while (currentId) {
       const folder: SelectFolder | undefined = folders.find(
         (f) => f.id === currentId,
