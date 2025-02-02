@@ -1,8 +1,8 @@
 import { FolderIcon, FileIcon } from "lucide-react";
-import { type File, type Folder } from "../lib/mockData";
+import type { SelectFile, SelectFolder } from "../server/db/schema";
 import Link from "next/link";
 
-export function FileTreeItem(props: { readonly file: File }) {
+export function FileTreeItem(props: { readonly file: SelectFile }) {
   const { file } = props;
   return (
     <Link
@@ -21,8 +21,8 @@ export function FileTreeItem(props: { readonly file: File }) {
 }
 
 export function FolderTreeItem(props: {
-  readonly folder: Folder;
-  readonly onNavigate: (id: string) => void;
+  readonly folder: SelectFolder;
+  readonly onNavigate: (id: number) => void;
 }) {
   const { folder, onNavigate } = props;
   return (

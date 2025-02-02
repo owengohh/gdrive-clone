@@ -1,10 +1,10 @@
-import { type Folder } from "../lib/mockData";
+import type { SelectFolder } from "../server/db/schema";
 import { ChevronRightIcon, HomeIcon } from "lucide-react";
 import React from "react";
 
 export default function BreadCrumbs(props: {
-  readonly path: Folder[];
-  readonly onNavigate: (id: string) => void;
+  readonly path: SelectFolder[];
+  readonly onNavigate: (id: number) => void;
 }) {
   const { path, onNavigate } = props;
   return (
