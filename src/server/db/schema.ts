@@ -1,36 +1,51 @@
-// Example model schema from the Drizzle docs
-// https://orm.drizzle.team/docs/sql-schema-declaration
+import "server-only";
 
-import { sql } from "drizzle-orm";
 import {
-  index,
   integer,
-  pgTableCreator,
+  pgTable,
+  text,
   timestamp,
-  varchar,
+  serial,
+  index,
 } from "drizzle-orm/pg-core";
 
-/**
- * This is an example of how to use the multi-project schema feature of Drizzle ORM. Use the same
- * database instance for multiple projects.
- *
- * @see https://orm.drizzle.team/docs/goodies#multi-project-schema
- */
-export const createTable = pgTableCreator((name) => `google-drive-clone_${name}`);
-
-export const posts = createTable(
-  "post",
+export const filesTable = pgTable(
+  "files",
   {
-    id: integer("id").primaryKey().generatedByDefaultAsIdentity(),
-    name: varchar("name", { length: 256 }),
-    createdAt: timestamp("created_at", { withTimezone: true })
-      .default(sql`CURRENT_TIMESTAMP`)
-      .notNull(),
-    updatedAt: timestamp("updated_at", { withTimezone: true }).$onUpdate(
-      () => new Date()
-    ),
+    id: serial("id").primaryKey().notNull(),
+    name: text("name").notNull(),
+    type: text("type").notNull(),
+    url: text("url").notNull(),
+    parentId: integer("parentId").notNull(),
+    size: integer("size").notNull(),
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
+    updatedAt: timestamp("updatedAt").defaultNow().notNull(),
   },
-  (example) => ({
-    nameIndex: index("name_idx").on(example.name),
-  })
+  (table) => {
+    return {
+      indexes: [index("parentIdIndex").on(table.parentId)],
+    };
+  },
 );
+
+export const foldersTable = pgTable(
+  "folders",
+  {
+    id: serial("id").primaryKey().notNull(),
+    name: text("name").notNull(),
+    parentId: integer("parentId"),
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
+    updatedAt: timestamp("updatedAt").defaultNow().notNull(),
+  },
+  (table) => {
+    return {
+      indexes: [index("parentIdIndex").on(table.parentId)],
+    };
+  },
+);
+
+export type InsertFile = typeof filesTable.$inferInsert;
+export type SelectFile = typeof filesTable.$inferSelect;
+
+export type InsertFolder = typeof foldersTable.$inferInsert;
+export type SelectFolder = typeof foldersTable.$inferSelect;
