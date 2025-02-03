@@ -3,13 +3,12 @@
 ## TODO
 
 - [x] Set up database and data model
-- [] Move folder open state to url
+- [x] Move folder open state to url
 - [] add auth
 - [] add file uploading
+- [] add analytics
 
-## Note from 1-26-2025
-- finished connecting database [x]
-- manually insert examples [x]
-- render in UI [x]
-- push and make sure it work [x]
-
+## 3-2-25
+- [ ] change folders to link components and remove all client state
+- [] clean up the database and data fetching patterns
+- [] real homepage
