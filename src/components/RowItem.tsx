@@ -22,13 +22,12 @@ export function FileTreeItem(props: { readonly file: SelectFile }) {
 
 export function FolderTreeItem(props: {
   readonly folder: SelectFolder;
-  readonly onNavigate: (id: number) => void;
 }) {
-  const { folder, onNavigate } = props;
+  const { folder } = props;
   return (
-    <button
+    <Link
       className="flex w-full items-center rounded-lg p-2 text-left hover:bg-gray-700"
-      onClick={() => onNavigate(folder.id)}
+      href={`/f/${folder.id}`}
     >
       <div className="flex flex-1 items-center">
         <FolderIcon className="mr-2 h-5 w-5 text-yellow-400" />
@@ -36,6 +35,6 @@ export function FolderTreeItem(props: {
       </div>
       <div className="w-24 text-gray-400">Folder</div>
       <div className="w-24 text-right text-gray-400">-</div>
-    </button>
+    </Link>
   );
 }

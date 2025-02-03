@@ -14,36 +14,8 @@ export default function GoogleDriveClone(
   }>,
 ) {
   const { files, folders } = props;
-  const [currentFolder, setCurrentFolder] = useState<number>(1);
 
-  const getChildFolders = () => {
-    return folders.filter((folder) => folder.parentId === currentFolder);
-  };
-
-  const getChildFiles = () => {
-    return files.filter((file) => file.parentId === currentFolder);
-  };
-
-  const navigate = (id: number) => {
-    setCurrentFolder(id);
-  };
-
-  const path = useMemo(() => {
-    const newPath = [];
-    let currentId: number | undefined = currentFolder;
-    while (currentId) {
-      const folder: SelectFolder | undefined = folders.find(
-        (f) => f.id === currentId,
-      );
-      if (folder) {
-        newPath.unshift(folder);
-        currentId = folder.parentId ?? undefined;
-      } else {
-        break;
-      }
-    }
-    return newPath;
-  }, [currentFolder, folders]);
+  const path = [];
 
   const handleUpload = () => {
     // Mock upload functionality
@@ -62,7 +34,7 @@ export default function GoogleDriveClone(
           Upload
         </Button>
       </div>
-      <BreadCrumbs path={path} onNavigate={navigate} />
+      {/* <BreadCrumbs path={path} onNavigate={navigate} /> */}
       <div className="rounded-lg bg-gray-800 p-4 shadow-md">
         <div className="flex items-center border-b border-gray-700 p-2 font-semibold text-gray-300">
           <div className="flex flex-1 cursor-pointer items-center">
@@ -75,10 +47,10 @@ export default function GoogleDriveClone(
             Size <ArrowUpDown className="ml-1 inline h-4 w-4" />
           </div>
         </div>
-        {getChildFolders().map((item) => (
-          <FolderTreeItem key={item.id} folder={item} onNavigate={navigate} />
+        {folders.map((item) => (
+          <FolderTreeItem key={item.id} folder={item} />
         ))}
-        {getChildFiles().map((item) => (
+        {files.map((item) => (
           <FileTreeItem key={item.id} file={item} />
         ))}
       </div>

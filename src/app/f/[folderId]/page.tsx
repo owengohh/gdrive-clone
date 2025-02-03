@@ -20,6 +20,8 @@ export default async function FolderPage(props: {
     .select()
     .from(foldersTable)
     .where(eq(foldersTable.parentId, parsedFolderId));
+    console.log(files);
+    console.log(folders);
   return (
     <main className="min-h-screen bg-gray-900">
       <GoogleDriveClone files={files} folders={folders} />
