@@ -1,5 +1,5 @@
 import GoogleDriveClone from "../../../components/GoogleDriveContents";
-import { QUERIES } from "~/server/db/queries";
+import { QUERIES } from "../../../server/db/queries";
 
 export default async function FolderPage(props: {
   readonly params: Promise<{ folderId: string }>;
