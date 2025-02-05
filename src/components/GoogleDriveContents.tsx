@@ -4,6 +4,7 @@ import { Button } from "./ui/button";
 import { FileTreeItem, FolderTreeItem } from "./RowItem";
 import BreadCrumbs from "./BreadCrumbs";
 import type { SelectFile, SelectFolder } from "../server/db/schema";
+import { UserButton, SignInButton, SignedOut, SignedIn } from "@clerk/nextjs";
 
 export default function GoogleDriveClone(
   props: Readonly<{
@@ -18,15 +19,14 @@ export default function GoogleDriveClone(
     <div className="container mx-auto p-4">
       <div className="mb-4 flex items-center justify-between">
         <h1 className="text-2xl font-bold text-gray-100">Google Drive</h1>
-        <Button
-          onClick={() => {
-            console.log("Upload");
-          }}
-          className="flex items-center bg-blue-600 text-white hover:bg-blue-700"
-        >
-          <UploadIcon className="mr-2 h-4 w-4" />
-          Upload
-        </Button>
+        <div>
+          <SignedOut>
+            <SignInButton />
+          </SignedOut>
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
+        </div>
       </div>
       <BreadCrumbs path={parents} />
       <div className="rounded-lg bg-gray-800 p-4 shadow-md">

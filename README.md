@@ -9,6 +9,9 @@
 - [] add analytics
 
 ## 3-2-25
-- [ ] change folders to link components and remove all client state
-- [] clean up the database and data fetching patterns
+
+## 4-2-25
+
+- [x] change folders to link components and remove all client state
+- [x] clean up the database and data fetching patterns
 - [] real homepage
