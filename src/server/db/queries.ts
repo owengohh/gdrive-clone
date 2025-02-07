@@ -35,3 +35,22 @@ export const QUERIES = {
       .where(eq(foldersTable.parentId, folderId));
   },
 };
+
+export const MUTATIONS = {
+  createFile: async function (input: {
+    file: {
+      name: string;
+      type: string;
+      url: string;
+      size: number;
+      parentId: number;
+    };
+    userID: string;
+  }) {
+    console.log(input);
+    return await db.insert(filesTable).values({
+        ...input.file,
+        parentId: input.file.parentId,
+    });
+  },
+};

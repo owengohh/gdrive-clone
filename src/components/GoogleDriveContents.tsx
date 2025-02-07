@@ -4,6 +4,8 @@ import { FileTreeItem, FolderTreeItem } from "./RowItem";
 import BreadCrumbs from "./BreadCrumbs";
 import type { SelectFile, SelectFolder } from "../server/db/schema";
 import { UserButton, SignInButton, SignedOut, SignedIn } from "@clerk/nextjs";
+import { UploadButton } from "./uploadthing";
+import { useRouter } from "next/navigation";
 
 export default function GoogleDriveClone(
   props: Readonly<{
@@ -13,6 +15,7 @@ export default function GoogleDriveClone(
   }>,
 ) {
   const { files, folders, parents } = props;
+  const navigate = useRouter();
 
   return (
     <div className="container mx-auto p-4">
@@ -47,6 +50,11 @@ export default function GoogleDriveClone(
           <FileTreeItem key={item.id} file={item} />
         ))}
       </div>
+      <UploadButton endpoint="imageUploader" onClientUploadComplete={
+        () => {
+            navigate.refresh();
+        }
+      }/>
     </div>
   );
 }
