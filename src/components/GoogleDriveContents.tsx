@@ -1,6 +1,5 @@
 "use client";
-import { UploadIcon, ArrowUpDown } from "lucide-react";
-import { Button } from "./ui/button";
+import { ArrowUpDown } from "lucide-react";
 import { FileTreeItem, FolderTreeItem } from "./RowItem";
 import BreadCrumbs from "./BreadCrumbs";
 import type { SelectFile, SelectFolder } from "../server/db/schema";
