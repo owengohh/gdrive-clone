@@ -5,13 +5,11 @@
 - [x] Set up database and data model
 - [x] Move folder open state to url
 - [x] add auth
-- [] add file uploading
+- [x] add file uploading
 - [] add analytics
 
-## 3-2-25
-
-## 4-2-25
-
-- [x] change folders to link components and remove all client state
-- [x] clean up the database and data fetching patterns
-- [] real homepage
+## 8-2-25
+- [ ] real homepage
+- [] upload files to right folder
+- [] delete file button
+- [] allow files that arent images to be upload
