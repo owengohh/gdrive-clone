@@ -6,8 +6,7 @@ import type { SelectFile, SelectFolder } from "../../../../server/db/schema";
 import { UserButton, SignInButton, SignedOut, SignedIn } from "@clerk/nextjs";
 import { UploadButton } from "../../../../components/uploadthing";
 import { useRouter } from "next/navigation";
-import { deleteFile } from "~/server/actions";
-
+ 
 export default function GoogleDriveClone(
   props: Readonly<{
     files: SelectFile[];
