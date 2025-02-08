@@ -14,15 +14,13 @@ export function FileTreeItem(props: { readonly file: SelectFile }) {
         <FileIcon className="mr-2 h-5 w-5 text-gray-400" />
         <span className="text-gray-200">{file.name}</span>
       </div>
-      <div className="w-24 text-gray-400">File</div>
+      <div className="w-24 text-gray-400">{file.type}</div>
       <div className="w-24 text-right text-gray-400">{file.size}</div>
     </Link>
   );
 }
 
-export function FolderTreeItem(props: {
-  readonly folder: SelectFolder;
-}) {
+export function FolderTreeItem(props: { readonly folder: SelectFolder }) {
   const { folder } = props;
   return (
     <Link
