@@ -24,9 +24,9 @@ export function FileTreeItem(props: { readonly file: SelectFile }) {
         className="w-24 text-right"
         variant="ghost"
         aria-label="Delete file"
-        onClick={() => {
+        onClick={async () => {
           console.log("Delete file", file.id);
-          deleteFile(file.id);
+          await deleteFile(file.id);
         }}
       >
         <Trash2Icon size={20} />
