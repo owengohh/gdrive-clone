@@ -2,9 +2,9 @@
 import { ArrowUpDown } from "lucide-react";
 import { FileTreeItem, FolderTreeItem } from "./RowItem";
 import BreadCrumbs from "./BreadCrumbs";
-import type { SelectFile, SelectFolder } from "../server/db/schema";
+import type { SelectFile, SelectFolder } from "../../../../server/db/schema";
 import { UserButton, SignInButton, SignedOut, SignedIn } from "@clerk/nextjs";
-import { UploadButton } from "./uploadthing";
+import { UploadButton } from "../../../../components/uploadthing";
 import { useRouter } from "next/navigation";
 
 export default function GoogleDriveClone(

@@ -1,4 +1,4 @@
-import GoogleDriveClone from "../../../components/GoogleDriveContents";
+import GoogleDriveClone from "./_components/GoogleDriveContents";
 import { QUERIES } from "../../../server/db/queries";
 
 export default async function FolderPage(props: {

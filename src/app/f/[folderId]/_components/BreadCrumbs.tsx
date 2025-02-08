@@ -1,4 +1,4 @@
-import type { SelectFolder } from "../server/db/schema";
+import type { SelectFolder } from "../../../../server/db/schema";
 import { ChevronRightIcon, HomeIcon } from "lucide-react";
 import React from "react";
 import Link from "next/link";

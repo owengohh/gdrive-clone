@@ -7,6 +7,8 @@
 - [x] add auth
 - [x] add file uploading
 - [] add analytics
+- [] add delete
+- [] real homepage + onboarding
 
 ## 8-2-25
 - [x] add 'ownership' to files and folders

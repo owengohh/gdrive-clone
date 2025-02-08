@@ -1,5 +1,5 @@
 import { FolderIcon, FileIcon } from "lucide-react";
-import type { SelectFile, SelectFolder } from "../server/db/schema";
+import type { SelectFile, SelectFolder } from "../../../../server/db/schema";
 import Link from "next/link";
 
 export function FileTreeItem(props: { readonly file: SelectFile }) {
