@@ -12,6 +12,7 @@ export default function GoogleDriveClone(
     files: SelectFile[];
     folders: SelectFolder[];
     parents: SelectFolder[];
+    currentFolderId: number;
   }>,
 ) {
   const { files, folders, parents } = props;
@@ -50,11 +51,13 @@ export default function GoogleDriveClone(
           <FileTreeItem key={item.id} file={item} />
         ))}
       </div>
-      <UploadButton endpoint="imageUploader" onClientUploadComplete={
-        () => {
-            navigate.refresh();
-        }
-      }/>
+      <UploadButton
+        endpoint="imageUploader"
+        onClientUploadComplete={() => {
+          navigate.refresh();
+        }}
+        input={{ folderId: props.currentFolderId }}
+      />
     </div>
   );
 }

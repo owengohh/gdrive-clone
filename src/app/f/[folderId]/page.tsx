@@ -17,7 +17,12 @@ export default async function FolderPage(props: {
 
   return (
     <main className="min-h-screen bg-gray-900">
-      <GoogleDriveClone files={files} folders={folders} parents={parents} />
+      <GoogleDriveClone
+        files={files}
+        folders={folders}
+        parents={parents}
+        currentFolderId={parsedFolderId}
+      />
     </main>
   );
 }

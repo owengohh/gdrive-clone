@@ -9,7 +9,8 @@
 - [] add analytics
 
 ## 8-2-25
-- [ ] real homepage
-- [] upload files to right folder
+- [x] add 'ownership' to files and folders
+- [x] upload files to right folder
 - [] delete file button
 - [] allow files that arent images to be upload
+- [] real homepage

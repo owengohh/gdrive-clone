@@ -1,3 +1,4 @@
+import { auth } from "@clerk/nextjs/server";
 import { db } from "../../server/db/index";
 import { mockFiles, mockFolders } from "~/lib/mockData";
 import { filesTable, foldersTable } from "~/server/db/schema";
@@ -9,11 +10,16 @@ export default function SandboxPage() {
       <form
         action={async () => {
           "use server";
+          const user = await auth();
+          if (!user.userId) {
+            throw new Error("User not found");
+          }
           await db.insert(foldersTable).values(
             mockFolders.map((folder, index) => ({
               id: index + 1,
               name: folder.name,
               parentId: index !== 0 ? 1 : null,
+              ownerId: user.userId,
             })),
           );
           await db.insert(filesTable).values(
@@ -24,6 +30,7 @@ export default function SandboxPage() {
               url: file.url,
               parentId: 1,
               size: 50000,
+              ownerId: user.userId,
             })),
           );
         }}

@@ -34,6 +34,13 @@ export const QUERIES = {
       .from(foldersTable)
       .where(eq(foldersTable.parentId, folderId));
   },
+  getFolderById: async function (folderId: number) {
+    return await db
+      .select()
+      .from(foldersTable)
+      .where(eq(foldersTable.id, folderId))
+      .then((result) => result[0]);
+  },
 };
 
 export const MUTATIONS = {
@@ -48,9 +55,11 @@ export const MUTATIONS = {
     userID: string;
   }) {
     console.log(input);
-    return await db.insert(filesTable).values({
+    return await db.insert(filesTable).values([
+      {
         ...input.file,
-        parentId: input.file.parentId,
-    });
+        ownerId: input.userID,
+      },
+    ]);
   },
 };

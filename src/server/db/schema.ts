@@ -13,6 +13,7 @@ export const filesTable = pgTable(
   "files",
   {
     id: serial("id").primaryKey().notNull(),
+    ownerId: text("ownerId").notNull(),
     name: text("name").notNull(),
     type: text("type").notNull(),
     url: text("url").notNull(),
@@ -23,7 +24,10 @@ export const filesTable = pgTable(
   },
   (table) => {
     return {
-      indexes: [index("parentIdIndex").on(table.parentId)],
+      indexes: [
+        index("parentIdIndex").on(table.parentId),
+        index("ownerIdIndex").on(table.ownerId),
+      ],
     };
   },
 );
@@ -32,6 +36,7 @@ export const foldersTable = pgTable(
   "folders",
   {
     id: serial("id").primaryKey().notNull(),
+    ownerId: text("ownerId").notNull(),
     name: text("name").notNull(),
     parentId: integer("parentId"),
     createdAt: timestamp("createdAt").defaultNow().notNull(),
@@ -39,7 +44,10 @@ export const foldersTable = pgTable(
   },
   (table) => {
     return {
-      indexes: [index("parentIdIndex").on(table.parentId)],
+      indexes: [
+        index("parentIdIndex").on(table.parentId),
+        index("ownerIdIndex").on(table.ownerId),
+      ],
     };
   },
 );
