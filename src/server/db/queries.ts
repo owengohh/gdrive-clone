@@ -26,13 +26,15 @@ export const QUERIES = {
     return db
       .select()
       .from(filesTable)
-      .where(eq(filesTable.parentId, folderId));
+      .where(eq(filesTable.parentId, folderId))
+      .orderBy(filesTable.id);
   },
   getFolders: function (folderId: number) {
     return db
       .select()
       .from(foldersTable)
-      .where(eq(foldersTable.parentId, folderId));
+      .where(eq(foldersTable.parentId, folderId))
+      .orderBy(foldersTable.id);
   },
   getFolderById: async function (folderId: number) {
     return await db
