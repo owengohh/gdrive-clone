@@ -2,7 +2,7 @@ import "server-only";
 
 import { db } from "~/server/db";
 import { filesTable, foldersTable } from "~/server/db/schema";
-import { eq } from "drizzle-orm";
+import { eq, and, isNull } from "drizzle-orm";
 
 export const QUERIES = {
   getAllParentsForFolder: async function (folderId: number) {
@@ -43,6 +43,15 @@ export const QUERIES = {
       .where(eq(foldersTable.id, folderId))
       .then((result) => result[0]);
   },
+  getRootFolderForUser: async function (userId: string) {
+    return await db
+      .select()
+      .from(foldersTable)
+      .where(
+        and(eq(foldersTable.ownerId, userId), isNull(foldersTable.parentId)),
+      )
+      .then((result) => result[0]);
+  },
 };
 
 export const MUTATIONS = {
@@ -61,6 +70,55 @@ export const MUTATIONS = {
       {
         ...input.file,
         ownerId: input.userID,
+      },
+    ]);
+  },
+  onBoardUser: async function (input: { userID: string }) {
+    const rootFolder = await db
+      .insert(foldersTable)
+      .values([
+        {
+          name: "root",
+          parentId: null,
+          ownerId: input.userID,
+        },
+      ])
+      .returning({ id: foldersTable.id });
+    console.log(rootFolder);
+    await db.insert(foldersTable).values([
+      {
+        name: "Shared",
+        parentId: rootFolder[0]!.id,
+        ownerId: input.userID,
+      },
+      {
+        name: "Trash",
+        parentId: rootFolder[0]!.id,
+        ownerId: input.userID,
+      },
+      {
+        name: "Documents",
+        parentId: rootFolder[0]!.id,
+        ownerId: input.userID,
+      },
+      {
+        name: "Images",
+        parentId: rootFolder[0]!.id,
+        ownerId: input.userID,
+      },
+    ]);
+    return rootFolder[0]!.id;
+  },
+  createFolder: async function (input: {
+    name: string;
+    parentId: number;
+    ownerId: string;
+  }) {
+    return await db.insert(foldersTable).values([
+      {
+        name: input.name,
+        parentId: input.parentId,
+        ownerId: input.ownerId,
       },
     ]);
   },

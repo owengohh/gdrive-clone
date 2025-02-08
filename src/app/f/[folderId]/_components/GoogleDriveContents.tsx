@@ -6,16 +6,17 @@ import type { SelectFile, SelectFolder } from "../../../../server/db/schema";
 import { UserButton, SignInButton, SignedOut, SignedIn } from "@clerk/nextjs";
 import { UploadButton } from "../../../../components/uploadthing";
 import { useRouter } from "next/navigation";
- 
+
 export default function GoogleDriveClone(
   props: Readonly<{
     files: SelectFile[];
     folders: SelectFolder[];
     parents: SelectFolder[];
     currentFolderId: number;
+    rootFolderId: number;
   }>,
 ) {
-  const { files, folders, parents } = props;
+  const { files, folders, parents, currentFolderId, rootFolderId } = props;
   const navigate = useRouter();
 
   return (
@@ -31,7 +32,7 @@ export default function GoogleDriveClone(
           </SignedIn>
         </div>
       </div>
-      <BreadCrumbs path={parents} />
+      <BreadCrumbs path={parents} rootFolderId={rootFolderId} />
       <div className="rounded-lg bg-gray-800 p-4 shadow-md">
         <div className="flex items-center border-b border-gray-700 p-2 font-semibold text-gray-300">
           <div className="flex flex-1 cursor-pointer items-center">
@@ -57,7 +58,7 @@ export default function GoogleDriveClone(
         onClientUploadComplete={() => {
           navigate.refresh();
         }}
-        input={{ folderId: props.currentFolderId }}
+        input={{ folderId: currentFolderId }}
       />
     </div>
   );

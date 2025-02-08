@@ -7,9 +7,8 @@ import { PostHogProvider } from "./_providers/posthog-provider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Google Drive Clone",
-  description:
-    "A Google Drive Clone built with Next.js, Drizzle, Neon, and Clerk.",
+  title: "CloudDrive - Your Personal Cloud Storage",
+  description: "Access your files from anywhere with CloudDrive.",
   icons: [
     {
       rel: "icon",

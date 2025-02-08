@@ -20,7 +20,15 @@ export function FileTreeItem(props: { readonly file: SelectFile }) {
         <div className="w-24 text-gray-400">{file.type}</div>
         <div className="w-24 text-right text-gray-400">{file.size}</div>
       </Link>
-      <Button className="w-24 text-right" variant="ghost" aria-label="Delete file" onClick={() => deleteFile(file.id)}>
+      <Button
+        className="w-24 text-right"
+        variant="ghost"
+        aria-label="Delete file"
+        onClick={() => {
+          console.log("Delete file", file.id);
+          deleteFile(file.id);
+        }}
+      >
         <Trash2Icon size={20} />
       </Button>
     </div>
