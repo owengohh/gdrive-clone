@@ -6,6 +6,7 @@ import type { SelectFile, SelectFolder } from "../../../../server/db/schema";
 import { UserButton, SignInButton, SignedOut, SignedIn } from "@clerk/nextjs";
 import { UploadButton } from "../../../../components/uploadthing";
 import { useRouter } from "next/navigation";
+import { deleteFile } from "~/server/actions";
 
 export default function GoogleDriveClone(
   props: Readonly<{
@@ -43,6 +44,7 @@ export default function GoogleDriveClone(
           <div className="w-24 cursor-pointer text-right">
             Size <ArrowUpDown className="ml-1 inline h-4 w-4" />
           </div>
+          <div className="w-24 cursor-pointer text-right">Action</div>
         </div>
         {folders.map((item) => (
           <FolderTreeItem key={item.id} folder={item} />
