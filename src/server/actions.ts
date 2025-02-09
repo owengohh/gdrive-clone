@@ -46,3 +46,15 @@ export async function deleteFile(fileId: number) {
 export async function deleteFolder(folderId: number) {
   await db.delete(foldersTable).where(eq(foldersTable.id, folderId));
 }
+
+export async function createFolder(name: string, parentId: number) {
+  const session = await auth();
+  if (!session.userId) {
+    throw new Error("Unauthorized");
+  }
+  return await db.insert(foldersTable).values({
+    name,
+    parentId,
+    ownerId: session.userId,
+  });
+}

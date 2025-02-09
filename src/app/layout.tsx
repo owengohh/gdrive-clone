@@ -25,9 +25,9 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en" className="dark">
-        <body className={inter.className}>
-          <PostHogProvider>{children}</PostHogProvider>
-        </body>
+          <body className={inter.className}>
+            <PostHogProvider>{children}</PostHogProvider>
+          </body>
       </html>
     </ClerkProvider>
   );

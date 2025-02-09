@@ -1,7 +1,7 @@
 import "server-only";
 
 import { db } from "~/server/db";
-import { filesTable, foldersTable } from "~/server/db/schema";
+import { filesTable, foldersTable, SelectFolder } from "~/server/db/schema";
 import { eq, and, isNull } from "drizzle-orm";
 
 export const QUERIES = {
@@ -52,6 +52,37 @@ export const QUERIES = {
       )
       .then((result) => result[0]);
   },
+  getFoldersForUserInRootFolder: async function (userId: string) {
+    const rootFolder = await db
+      .select()
+      .from(foldersTable)
+      .where(
+        and(eq(foldersTable.ownerId, userId), isNull(foldersTable.parentId)),
+      );
+
+    return await db
+      .select()
+      .from(foldersTable)
+      .where(
+        and(
+          eq(foldersTable.ownerId, userId),
+          eq(foldersTable.parentId, rootFolder[0]!.id),
+        ),
+      )
+      .orderBy(foldersTable.id);
+  },
+  getFoldersForUserInFolder: async function (userId: string, folderId: number) {
+    return await db
+      .select()
+      .from(foldersTable)
+      .where(
+        and(
+          eq(foldersTable.ownerId, userId),
+          eq(foldersTable.parentId, folderId),
+        ),
+      )
+      .orderBy(foldersTable.id);
+  },
 };
 
 export const MUTATIONS = {
@@ -78,7 +109,7 @@ export const MUTATIONS = {
       .insert(foldersTable)
       .values([
         {
-          name: "root",
+          name: "Home",
           parentId: null,
           ownerId: input.userID,
         },
@@ -108,18 +139,5 @@ export const MUTATIONS = {
       },
     ]);
     return rootFolder[0]!.id;
-  },
-  createFolder: async function (input: {
-    name: string;
-    parentId: number;
-    ownerId: string;
-  }) {
-    return await db.insert(foldersTable).values([
-      {
-        name: input.name,
-        parentId: input.parentId,
-        ownerId: input.ownerId,
-      },
-    ]);
   },
 };
