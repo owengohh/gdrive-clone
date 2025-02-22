@@ -15,7 +15,7 @@ import { useRouter } from "next/navigation";
 
 export function NewFileDialog(props: { currentFolderId: number }) {
   const navigate = useRouter();
-  let { currentFolderId } = props;
+  const { currentFolderId } = props;
   const [open, setOpen] = useState(false);
   return (
     <Dialog open={open} onOpenChange={setOpen}>

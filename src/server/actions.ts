@@ -43,18 +43,64 @@ export async function deleteFile(fileId: number) {
   return { success: true };
 }
 
-export async function deleteFolder(folderId: number) {
-  await db.delete(foldersTable).where(eq(foldersTable.id, folderId));
-}
+export async function createFolderAction(formData: FormData) {
+  const name = formData.get("folderName") as string;
+  const parentId = Number(formData.get("parentId"));
 
-export async function createFolder(name: string, parentId: number) {
   const session = await auth();
   if (!session.userId) {
-    throw new Error("Unauthorized");
+    throw new Error("User not authenticated");
   }
-  return await db.insert(foldersTable).values({
+
+  await db.insert(foldersTable).values({
     name,
     parentId,
     ownerId: session.userId,
   });
+}
+
+export async function renameFile(fileId: number, newName: string) {
+  const session = await auth();
+  if (!session.userId) {
+    throw new Error("Unauthorized");
+  }
+  console.log("Renaming file", fileId, newName);
+  await db
+    .update(filesTable)
+    .set({ name: newName })
+    .where(
+      and(eq(filesTable.id, fileId), eq(filesTable.ownerId, session.userId)),
+    );
+}
+
+export async function deleteFolder(folderId: number) {
+  const session = await auth();
+  if (!session.userId) {
+    throw new Error("Unauthorized");
+  }
+  await db
+    .delete(foldersTable)
+    .where(
+      and(
+        eq(foldersTable.id, folderId),
+        eq(foldersTable.ownerId, session.userId),
+      ),
+    );
+}
+
+export async function renameFolder(folderId: number, newName: string) {
+  const session = await auth();
+  if (!session.userId) {
+    throw new Error("Unauthorized");
+  }
+  console.log("Renaming folder", folderId, newName);
+  await db
+    .update(foldersTable)
+    .set({ name: newName })
+    .where(
+      and(
+        eq(foldersTable.id, folderId),
+        eq(foldersTable.ownerId, session.userId),
+      ),
+    );
 }

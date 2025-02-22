@@ -1,7 +1,5 @@
 "use client";
 import type { SelectFile, SelectFolder } from "../../../../server/db/schema";
-import { UploadButton } from "../../../../components/uploadthing";
-import { useRouter } from "next/navigation";
 import { columns } from "./datatable/columns";
 import FolderCard from "./FolderCard";
 import { DataTable } from "./datatable/data-table";
@@ -13,8 +11,7 @@ export default function GoogleDriveClone(
     currentFolderId: number;
   }>,
 ) {
-  const { files, folders, currentFolderId } = props;
-  const navigate = useRouter();
+  const { files, folders } = props;
 
   return (
     <div className="container mx-auto p-4">
@@ -24,7 +21,7 @@ export default function GoogleDriveClone(
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
           {folders.length > 0 ? (
             folders.map((folder) => (
-              <FolderCard key={folder.id} folder={folder}></FolderCard>
+              <FolderCard key={folder.id} folder={folder} />
             ))
           ) : (
             <p className="text-gray-400">No folders available.</p>

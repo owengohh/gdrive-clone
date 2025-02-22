@@ -6,11 +6,12 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../../../../../components/ui/dropdown-menu";
 import { ArrowUpDown } from "lucide-react";
+import { deleteFile } from "~/server/actions";
+import { RenameModal } from "../RenameModal";
+import * as React from "react";
 
 export const columns: ColumnDef<SelectFile>[] = [
   {
@@ -49,13 +50,12 @@ export const columns: ColumnDef<SelectFile>[] = [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
+            <RenameModal currentFolderId={file.id} />
             <DropdownMenuItem
-              onClick={() => console.log(`Rename ${file.name}`)}
-            >
-              Rename File
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={() => console.log(`Delete ${file.name}`)}
+              onClick={async (e) => {
+                e.stopPropagation();
+                await deleteFile(file.id);
+              }}
               className="text-red-500"
             >
               Delete File

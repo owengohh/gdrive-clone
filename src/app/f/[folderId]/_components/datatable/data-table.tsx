@@ -29,13 +29,14 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "../../../../../components/ui/dropdown-menu";
+import { useRouter } from "next/navigation";
 
-interface DataTableProps<TData, TValue> {
+interface DataTableProps<TData extends { url?: string }, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
 
-export function DataTable<TData, TValue>({
+export function DataTable<TData extends { url?: string }, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
@@ -43,6 +44,7 @@ export function DataTable<TData, TValue>({
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
   );
+  const navigate = useRouter();
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const table = useReactTable({
@@ -126,6 +128,9 @@ export function DataTable<TData, TValue>({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
+                  onClick={() => {
+                    window.open(row.original.url, "_blank");
+                  }}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>

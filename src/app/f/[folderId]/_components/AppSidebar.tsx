@@ -20,7 +20,7 @@ import { Button } from "~/components/ui/button";
 import Link from "next/link";
 import { NewFolderDialog } from "./NewFolderDialog";
 import { NewFileDialog } from "./NewFileDialog";
-import { createFolder } from "~/server/actions";
+import { createFolderAction } from "~/server/actions";
 // Icons Map
 const folderIcons: { [key: string]: React.ComponentType } = {
   Documents: File,
@@ -75,12 +75,11 @@ export function AppSidebar({
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
               <Link href={`/f/${rootFolder.id}`}>
-                <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
+                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
                   <GalleryVerticalEnd className="size-4" />
                 </div>
                 <div className="flex flex-col gap-0.5 leading-none">
                   <span className="font-semibold">Google Drive Clone</span>
-                  <span className="">v1.0.0</span>
                 </div>
                 <div className="ml-auto flex">
                   <SignedOut>
@@ -109,9 +108,8 @@ export function AppSidebar({
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <NewFolderDialog
-                  onCreate={async (name) => {
-                    await createFolder(name, currentFolderId);
-                  }}
+                  onCreate={createFolderAction}
+                  currentFolderId={currentFolderId}
                 />
                 <NewFileDialog currentFolderId={currentFolderId} />
               </DropdownMenuContent>

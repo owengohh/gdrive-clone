@@ -1,7 +1,7 @@
 import "server-only";
 
 import { db } from "~/server/db";
-import { filesTable, foldersTable, SelectFolder } from "~/server/db/schema";
+import { filesTable, foldersTable } from "~/server/db/schema";
 import { eq, and, isNull } from "drizzle-orm";
 
 export const QUERIES = {
@@ -16,7 +16,6 @@ export const QUERIES = {
       if (!folder[0]) {
         throw new Error("Folder not found");
       }
-      console.log(folder);
       parents.unshift(folder[0]);
       currentFolderId = folder[0]?.parentId;
     }
