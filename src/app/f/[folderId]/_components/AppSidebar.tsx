@@ -22,7 +22,7 @@ import { NewFolderDialog } from "./NewFolderDialog";
 import { NewFileDialog } from "./NewFileDialog";
 import { createFolderAction } from "~/server/actions";
 // Icons Map
-const folderIcons: { [key: string]: React.ComponentType } = {
+const folderIcons: Record<string, React.ComponentType> = {
   Documents: File,
   Images: Image,
   Shared: Users,
@@ -30,13 +30,20 @@ const folderIcons: { [key: string]: React.ComponentType } = {
 };
 
 // Function to get a folder by name
-const getFolderByName = (folderTree: any, name: string) =>
-  folderTree.find(
-    (folder: any) => folder.name.toLowerCase() === name.toLowerCase(),
-  );
+type Folder = {
+  id: number;
+  name: string;
+  ownerId: string;
+  parentId: number | null;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+const getFolderByName = (folderTree: Folder[], name: string) =>
+  folderTree.find((folder) => folder.name.toLowerCase() === name.toLowerCase());
 
 // Recursive function to render other folders dynamically
-const renderSidebarFolders = (folder: any) => {
+const renderSidebarFolders = (folder: Folder) => {
   return (
     <SidebarMenuItem key={folder.id}>
       <SidebarMenuButton asChild>
@@ -52,8 +59,24 @@ export function AppSidebar({
   currentFolderId,
   ...props
 }: {
-  rootFolder: any;
-  folderTree: any;
+  rootFolder:
+    | {
+        id: number;
+        name: string;
+        parentId: number | null;
+        ownerId: string;
+        createdAt: Date;
+        updatedAt: Date;
+      }
+    | undefined;
+  folderTree: {
+    id: number;
+    name: string;
+    ownerId: string;
+    parentId: number | null;
+    createdAt: Date;
+    updatedAt: Date;
+  }[];
   currentFolderId: number;
 } & React.ComponentProps<typeof Sidebar>) {
   // Get predefined folders
@@ -64,7 +87,7 @@ export function AppSidebar({
 
   // Get remaining folders (Work, Personal, and all others)
   const nonDefaultFolders = folderTree.filter(
-    (folder: any) =>
+    (folder) =>
       !["Documents", "Images", "Shared", "Trash"].includes(folder.name),
   );
 
@@ -74,7 +97,7 @@ export function AppSidebar({
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
-              <Link href={`/f/${rootFolder.id}`}>
+              <Link href={`/f/${rootFolder?.id}`}>
                 <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
                   <GalleryVerticalEnd className="size-4" />
                 </div>
