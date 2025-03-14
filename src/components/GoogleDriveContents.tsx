@@ -48,6 +48,12 @@ export default function GoogleDriveClone(
   const handleUpload = () => {
     // Mock upload functionality
     console.log("Upload clicked");
+    console.log("Uploading...");
+    setTimeout(() => {
+      console.log("Upload complete");
+    }
+    , 2000);
+    
   };
 
   return (
